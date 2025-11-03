@@ -9,7 +9,7 @@ SECRET_KEY = 'your-very-secret-key'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://bunny-dusky-seven.vercel.app/']
 
 # Application definition
 INSTALLED_APPS = [
