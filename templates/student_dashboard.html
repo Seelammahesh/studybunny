@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<h1>Student Dashboard</h1>
+<p>Here you can access and download study materials, quizzes, and videos.</p>
+
+<ul class="student-dashboard-list">
+    <li>Quiz 1 <a href="{% url 'quiz_list' %}">Take Quiz</a></li>
+    <li>Video Lectures <a href="{% url 'lectures' %}">Watch</a></li>
+    <li>PDF Notes <a href="#">Download</a></li>
+</ul>
+{% endblock %}

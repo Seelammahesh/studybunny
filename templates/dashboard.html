@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="fw-bold mb-4">Learning Dashboard</h2>
+<div class="row g-4">
+  {% for course in courses %}
+  <div class="col-md-4">
+    <div class="card h-100 shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">{{ course.title }}</h5>
+        <p class="text-muted small mb-1"><strong>Faculty:</strong> {{ course.faculty }}</p>
+        <p class="text-muted small"><strong>Credits:</strong> {{ course.credits }}</p>
+        <a href="{% url 'course_detail' course.id %}" class="btn btn-primary btn-sm mt-2">View Details</a>
+      </div>
+    </div>
+  </div>
+  {% empty %}
+  <p>No courses available yet.</p>
+  {% endfor %}
+</div>
+{% endblock %}

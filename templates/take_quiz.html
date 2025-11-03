@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container" style="max-width: 750px;">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h3 class="fw-bold">{{ quiz.title }}</h3>
+    <div>
+      <span class="badge bg-primary me-2" id="timer">02:00</span>
+      <span class="badge bg-secondary" id="progressText">0%</span>
+    </div>
+  </div>
+
+  <!-- Progress bar -->
+  <div class="progress mb-4">
+    <div id="progressBar" class="progress-bar progress-bar-striped progress-bar-animated" style="width: 0%;"></div>
+  </div>
+
+  <form id="quizForm" method="post">
+    {% csrf_token %}
+    {% for question in questions %}
+      <div class="card mb-4 shadow-sm question-card">
+        <div class="card-header bg-light fw-semibold">
+          {{ forloop.counter }}. {{ question.text }}
+        </div>
+        <div class="card-body">
+          {% for choice in question.choices.all %}
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="{{ question.id }}" value="{{ choice.id }}" id="q{{ question.id }}_{{ forloop.counter }}" required>
+              <label class="form-check-label" for="q{{ question.id }}_{{ forloop.counter }}">{{ choice.text }}</label>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endfor %}
+
+    <div class="text-center mt-4">
+      <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">Submit Quiz</button>
+    </div>
+  </form>
+</div>
+
+<!-- Confirmation Modal -->
+<div class="modal fade" id="confirmModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header"><h5 class="modal-title">Submit Quiz?</h5></div>
+      <div class="modal-body">Once submitted, you can’t change your answers.</div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button id="confirmSubmit" class="btn btn-primary">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Confetti Canvas -->
+<canvas id="confettiCanvas" style="position: fixed; top:0; left:0; width:100%; height:100%; pointer-events:none;"></canvas>
+
+{% block scripts %}
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("quizForm");
+  const modal = new bootstrap.Modal(document.getElementById("confirmModal"));
+  const confirmBtn = document.getElementById("confirmSubmit");
+  const timerEl = document.getElementById("timer");
+  const progressEl = document.getElementById("progressBar");
+  const progressText = document.getElementById("progressText");
+
+  const questions = document.querySelectorAll(".question-card");
+  const total = questions.length;
+  const inputs = document.querySelectorAll(".form-check-input");
+
+  // Track answered questions
+  function updateProgress() {
+    const answered = new Set([...inputs].filter(i => i.checked).map(i => i.name)).size;
+    const percent = Math.round((answered / total) * 100);
+    progressEl.style.width = percent + "%";
+    progressText.textContent = percent + "%";
+  }
+  inputs.forEach(i => i.addEventListener("change", updateProgress));
+
+  // Timer (2 minutes)
+  let time = 120;
+  const interval = setInterval(() => {
+    time--;
+    const m = String(Math.floor(time / 60)).padStart(2, '0');
+    const s = String(time % 60).padStart(2, '0');
+    timerEl.textContent = `${m}:${s}`;
+    if (time <= 0) {
+      clearInterval(interval);
+      modal.hide();
+      showToast("Time's up! Submitting automatically.", "danger");
+      form.submit();
+    }
+  }, 1000);
+
+  // Confirmation before submit
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+    modal.show();
+  });
+  confirmBtn.addEventListener("click", () => {
+    modal.hide();
+    clearInterval(interval);
+    form.submit();
+  });
+});
+</script>
+{% endblock %}
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="text-center py-5">
+  <h2 class="fw-bold mb-3">🎯 Quiz Result</h2>
+
+  {% if attempt %}
+    <div class="card shadow-lg p-5 mx-auto" style="max-width: 450px;">
+      <h3 class="fw-bold mb-3 text-primary">{{ attempt.quiz.title }}</h3>
+      <h4 class="text-success fw-bold">Score: {{ attempt.score }}%</h4>
+      <p class="fs-5 mt-2">Coins Earned: 🪙 {{ attempt.coins_earned }}</p>
+
+      {% if attempt.score >= 80 %}
+        <p class="text-success mt-3">Excellent work! You're a quiz master 🧠</p>
+      {% elif attempt.score >= 50 %}
+        <p class="text-warning mt-3">Good effort — keep practicing!</p>
+      {% else %}
+        <p class="text-danger mt-3">Don’t give up! Try again 💪</p>
+      {% endif %}
+
+      <a href="{% url 'quiz_list' %}" class="btn btn-outline-primary mt-3">Back to Quizzes</a>
+    </div>
+  {% else %}
+    <p>No attempts found.</p>
+  {% endif %}
+</div>
+
+<!-- Confetti canvas -->
+<canvas id="confettiCanvas" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;"></canvas>
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const score = {{ attempt.score|default:0 }};
+  if (score >= 50) {
+    const duration = 2 * 1000;
+    const animationEnd = Date.now() + duration;
+    const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+    function randomInRange(min, max) { return Math.random() * (max - min) + min; }
+    const interval = setInterval(() => {
+      const timeLeft = animationEnd - Date.now();
+      if (timeLeft <= 0) { clearInterval(interval); return; }
+      const particleCount = 50 * (timeLeft / duration);
+      confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0, 1), y: Math.random() - 0.2 } }));
+    }, 250);
+  }
+});
+</script>
+{% endblock %}
+{% endblock %}

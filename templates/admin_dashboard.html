@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Admin Dashboard</h1>
+    <p>Manage Quizzes, Videos, and PDFs to share with students.</p>
+</div>
+
+<ul class="admin-actions">
+    <li><a href="{% url 'admin_add_quiz' %}" class="btn-primary">Add Quiz</a></li>
+    <li><a href="{% url 'admin_upload_video' %}" class="btn-secondary">Upload Video</a></li>
+    <li><a href="{% url 'admin_upload_pdf' %}" class="btn-secondary">Upload PDF</a></li>
+</ul>
+{% endblock %}

@@ -1,0 +1,16 @@
+body { font-family: 'Segoe UI', Arial, sans-serif; background: #f5f6fb; margin: 0; }
+.navbar { display: flex; justify-content: space-between; align-items: center; padding: 18px 5%; background: #fff; border-bottom: 1px solid #eee; }
+.logo { font-size: 1.4em; font-weight: bold; display: flex; align-items: center; }
+.navbar ul { display: flex; gap: 2em; list-style: none; margin: 0; }
+.navbar a { text-decoration: none; color: #333; }
+.btn-login, .btn-signup, .btn-primary, .btn-details { border-radius: 6px; padding: 8px 20px; }
+.btn-login { color: #fff; background: #5465ff; border: none; }
+.btn-signup { background: #ff82a9; color: #fff; border: none; }
+.btn-primary { background: #5375e2; color: #fff; border: none; }
+.landing-page { display: flex; justify-content: center; align-items: center; height: 70vh; gap: 80px; }
+.landing-info { max-width: 500px; }
+.landing-img img { border-radius: 18px; }
+.login-container { display: flex; align-items: center; justify-content: center; height: 70vh; gap: 30px; }
+.login-form { background: #fff; padding: 2em 3em; border-radius: 18px; box-shadow: 0 0 12px rgba(44,66,90,0.08);}
+.courses-grid { display: flex; flex-wrap: wrap; gap: 16px; }
+.course-card { background: #fff; padding: 18px; border-radius: 12px; width: 270px; box-shadow: 0 4px 18px rgba(40,80,140,0.06);}

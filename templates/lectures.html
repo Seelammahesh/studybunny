@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<h1>Lecture Videos & PDFs</h1>
+<p>Here are the available lectures and materials:</p>
+
+<ul class="lecture-list">
+    {% for video in videos %}
+      <li>{{ video.title }} (Video)</li>
+    {% empty %}
+      <li>No lecture videos yet.</li>
+    {% endfor %}
+
+    {% for pdf in pdfs %}
+      <li>{{ pdf.title }} (PDF)</li>
+    {% empty %}
+      {# handled above if you want combined #}
+    {% endfor %}
+</ul>
+{% endblock %}

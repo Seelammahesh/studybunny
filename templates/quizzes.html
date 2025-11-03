@@ -1,0 +1,24 @@
+<!--quizzes.html-->
+
+{% load static %}
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Page specific content here, for example: -->
+<h2>This is the Dashboard Page</h2>
+<!-- Replace with real content for each template -->
+{% endblock %}
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Quizzes</h1>
+<p>Choose a quiz to play in gamified mode!</p>
+<ul>
+    {% for quiz in quizzes %}
+    <li>
+        <a href="{% url 'take_quiz' quiz.id %}">{{ quiz.title }}</a>
+        - {{ quiz.description }}
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
