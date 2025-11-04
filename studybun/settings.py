@@ -9,7 +9,7 @@ SECRET_KEY = 'yourverysecre-key'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://bunny-dusky-seven.vercel.app/']
+ALLOWED_HOSTS = ['https://bunny-dusky-seven.vercel.app/','127.0.0.1']
 
 # Application definition
 INSTALLED_APPS = [
@@ -23,9 +23,11 @@ INSTALLED_APPS = [
     'lms',
     
 ]
+AUTH_USER_MODEL = "lms.CustomUser"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # <--
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -33,6 +35,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 ROOT_URLCONF = 'studybun.urls'
 
@@ -86,6 +90,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
 LOGIN_URL = "login"

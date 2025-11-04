@@ -10,50 +10,21 @@ User = get_user_model()
 
 
 class SignUpForm(UserCreationForm):
-    email = forms.EmailField(
-        required=True,
-        widget=forms.EmailInput(attrs={
-            "placeholder": "Enter your email",
-            "class": "form-control",
-        })
-    )
-
     class Meta:
         model = User
-        fields = ("username", "email", "password1", "password2")
+        fields = ("full_name", "email", "password1", "password2")
         widgets = {
-            "username": forms.TextInput(attrs={
-                "placeholder": "Choose a username",
-                "class": "form-control",
-            }),
-            "password1": forms.PasswordInput(attrs={
-                "placeholder": "Enter password",
-                "class": "form-control",
-            }),
-            "password2": forms.PasswordInput(attrs={
-                "placeholder": "Confirm password",
-                "class": "form-control",
-            }),
+            "full_name": forms.TextInput(attrs={"class": "form-control", "placeholder": "Full Name"}),
+            "email": forms.EmailInput(attrs={"class": "form-control", "placeholder": "Email Address"}),
         }
 
+    
 
 class LoginForm(AuthenticationForm):
-    username = forms.CharField(
-        label="Username",
-        widget=forms.TextInput(attrs={
-            "placeholder": "Enter your username",
-            "class": "form-control",
-        })
-    )
-    password = forms.CharField(
-        label="Password",
-        strip=False,
-        widget=forms.PasswordInput(attrs={
-            "placeholder": "Enter your password",
-            "class": "form-control",
-        })
-    )
-
+    username = forms.EmailField(widget=forms.EmailInput(attrs={
+        "class": "form-control",
+        "placeholder": "Enter your email"
+    }))
 
 class CourseForm(forms.ModelForm):
     class Meta:
