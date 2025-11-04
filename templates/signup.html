@@ -1,22 +1,53 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="d-flex justify-content-center">
-  <div class="card shadow-sm p-4" style="max-width: 500px; width: 100%;">
-    <h3 class="text-center mb-4">Create your StudyBun account</h3>
+<div class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+  <div class="card shadow p-4 border-0" style="max-width: 500px; width: 100%; border-radius: 16px;">
+    <h3 class="text-center mb-4 fw-semibold text-dark">Create your StudyBun account</h3>
     <form method="post" novalidate>
       {% csrf_token %}
       {% for field in form %}
         <div class="mb-3">
-          <label class="form-label">{{ field.label }}</label>
+          {{ field.label_tag }}
           {{ field }}
           {% if field.errors %}
-            <div class="text-danger small">{{ field.errors|striptags }}</div>
+            <div class="text-danger small mt-1">{{ field.errors|striptags }}</div>
           {% endif %}
         </div>
       {% endfor %}
-      <button type="submit" class="btn btn-success w-100">Sign Up</button>
+      <button type="submit" class="btn w-100 mt-2"
+              style="background: linear-gradient(90deg, #11998e 0%, #38ef7d 100%);
+                     color: white; border: none; border-radius: 10px; padding: 10px 0;">
+        Sign Up
+      </button>
     </form>
-    <p class="text-center mt-3">Already have an account? <a href="{% url 'login' %}">Log in</a></p>
+
+    <p class="text-center mt-3 mb-0 text-muted">
+      Already have an account? 
+      <a href="{% url 'login' %}" class="fw-semibold text-decoration-none">Log in</a>
+    </p>
   </div>
 </div>
+
+<style>
+  input.form-control, input[type=email], input[type=password], input[type=text] {
+    border: 1.5px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 15px;
+    width: 100%;
+    transition: all 0.3s ease;
+  }
+  input:focus {
+    border-color: #38ef7d !important;
+    box-shadow: 0 0 0 2px rgba(56, 239, 125, 0.1);
+  }
+  ::placeholder {
+    color: #aaa !important;
+  }
+  label {
+    font-weight: 500;
+    margin-bottom: 6px;
+    color: #333;
+  }
+</style>
 {% endblock %}

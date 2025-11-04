@@ -1,27 +1,66 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="d-flex justify-content-center">
-  <div class="card shadow-sm p-4" style="max-width: 420px; width: 100%;">
-    <h3 class="text-center mb-4">Student Login</h3>
+<div class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+  <div class="card shadow p-4 border-0" style="max-width: 420px; width: 100%; border-radius: 16px;">
+    <h3 class="text-center mb-4 fw-semibold text-dark">Student Login</h3>
     <form method="post" novalidate>
       {% csrf_token %}
       {% for field in form %}
         <div class="mb-3">
-          <label class="form-label">{{ field.label }}</label>
+          {{ field.label_tag }}
           {{ field }}
           {% if field.errors %}
-            <div class="text-danger small">{{ field.errors|striptags }}</div>
+            <div class="text-danger small mt-1">{{ field.errors|striptags }}</div>
           {% endif %}
         </div>
       {% endfor %}
-      <button type="submit" class="btn btn-primary w-100">Login</button>
+      <button type="submit" class="btn w-100 mt-2" 
+              style="background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+                     color: white; border: none; border-radius: 10px; padding: 10px 0;">
+        Login
+      </button>
     </form>
-    <hr>
+
+    <hr class="my-4">
+
     <div class="text-center">
-      <button class="btn btn-outline-danger w-100 mb-2"><i class="bi bi-google"></i> Login with Google</button>
-      <button class="btn btn-outline-primary w-100"><i class="bi bi-facebook"></i> Login with Facebook</button>
+      <button class="btn w-100 mb-2"
+              style="border: 1px solid #ea4335; color: #ea4335; border-radius: 10px;">
+        <i class="bi bi-google"></i> Login with Google
+      </button>
+      <button class="btn w-100"
+              style="border: 1px solid #1877f2; color: #1877f2; border-radius: 10px;">
+        <i class="bi bi-facebook"></i> Login with Facebook
+      </button>
     </div>
-    <p class="text-center mt-3">Don't have an account? <a href="{% url 'signup' %}">Signup Now</a></p>
+
+    <p class="text-center mt-3 mb-0 text-muted">
+      Don’t have an account? 
+      <a href="{% url 'signup' %}" class="fw-semibold text-decoration-none">Signup Now</a>
+    </p>
   </div>
 </div>
+
+<style>
+  input.form-control, input[type=email], input[type=password] {
+    border: 1.5px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 15px;
+    width: 100%;
+    transition: all 0.3s ease;
+  }
+  input:focus {
+    border-color: #6a11cb !important;
+    box-shadow: 0 0 0 2px rgba(106, 17, 203, 0.1);
+  }
+  ::placeholder {
+    color: #aaa !important;
+  }
+  label {
+    font-weight: 500;
+    margin-bottom: 6px;
+    color: #333;
+  }
+</style>
 {% endblock %}

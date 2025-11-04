@@ -14,3 +14,6 @@ body { font-family: 'Segoe UI', Arial, sans-serif; background: #f5f6fb; margin: 
 .login-form { background: #fff; padding: 2em 3em; border-radius: 18px; box-shadow: 0 0 12px rgba(44,66,90,0.08);}
 .courses-grid { display: flex; flex-wrap: wrap; gap: 16px; }
 .course-card { background: #fff; padding: 18px; border-radius: 12px; width: 270px; box-shadow: 0 4px 18px rgba(40,80,140,0.06);}
+
+
+
